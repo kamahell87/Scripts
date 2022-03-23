@@ -34,7 +34,7 @@ yn = input('Do you want to continue? (y/n) ')
 
 if yn.lower() == 'y':
     os.system('echo Building the image...\n')
-    os.system(f'sudo docker build -t {reg_name}{name_img}:{tag_img} {path_to}')
+    os.system(f'sudo docker build -t {reg_name}/{name_img}:{tag_img} {path_to}')
     
     if push_img.lower() == 'y':
         os.system('echo Pushing the image...\n')
