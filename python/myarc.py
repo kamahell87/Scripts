@@ -15,7 +15,7 @@ parser.add_argument(
     "--source",
     type=str,
     dest="source",
-    help="Ansible root folder. e.g. '~/somedir/ansible'",
+    help="Ansible root folder. e.g. ~/somedir/ansible",
 )
 
 args = parser.parse_args()
