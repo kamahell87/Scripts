@@ -16,9 +16,10 @@ ARGUMENTS:
 Syntax: home-backup.sh -d [tank, personal] -u [dominus, kamahell87]
 
 EOF
+  exit 1
 }
 
-while getopts "d:u:h"; do
+while getopts "d:u:h" OPTION; do
   case $OPTION in
     h)
       usage
@@ -43,10 +44,20 @@ if [[ $# -eq 0 ]]; then
   exit 1
 fi
 
+
 do_the_magic()
 {
+# Owner check
+if [[ ! -d /home/$USER ]]; then
+  echo "Oops! Apparently '$USER' doesn't have a home!"
+  exit 1
+fi
+
 DIR=./$DEVICE-backups
-mkdir $DIR
+
+if [[ ! -d $DIR ]]; then
+  mkdir $DIR
+fi
 
 echo ">>> Creating the tarball..."
 tar -zcpf $DIR/$DEVICE-backup-$(date +%d-%m-%Y).tar /home/$USER
@@ -55,6 +66,7 @@ echo ">>> bzip-ing the tarball..."
 bzip2 $DIR/$DEVICE-backup-$(date +%d-%m-%Y).tar
 
 echo ">>> The following backup files have been removed (older than 60 days)."
-find $DIR/$DEVICE-backups/ -name '*.bz2' -type f -mtime +60 -delete -print
+find $DIR/ -name '*.bz2' -type f -mtime +60 -delete -print
 }
 
+do_the_magic
