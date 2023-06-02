@@ -54,6 +54,7 @@ if [[ ! -d /home/$USER ]]; then
 fi
 
 DIR=./$DEVICE-backups
+FILE=$(find $DIR/ -name '*.bz2' -type f -mtime +60)
 
 if [[ ! -d $DIR ]]; then
   mkdir $DIR
@@ -65,8 +66,15 @@ tar -zcpf $DIR/$DEVICE-backup-$(date +%d-%m-%Y).tar /home/$USER
 echo ">>> bzip-ing the tarball..."
 bzip2 $DIR/$DEVICE-backup-$(date +%d-%m-%Y).tar
 
-echo ">>> The following backup files have been removed (older than 60 days)."
-find $DIR/ -name '*.bz2' -type f -mtime +60 -delete -print
+if [[ $FILE ]]; then
+  echo ">>> Found files older than 60 days"
+  for f in $FILE; do
+    echo " Removing $f"
+    rm -rf $f
+  done
+fi
+
+echo "DONE!"
 }
 
 do_the_magic
