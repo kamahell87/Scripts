@@ -9,11 +9,11 @@ cat << EOF
 Script to take backup of /home directory.
 
 ARGUMENTS:
-  -d    The device name. e.g. tank, personal
+  -d    The device name (arbitrary). e.g. foo, bar, ...
   -u    The /home owner.
   -h    This help message.
 
-Syntax: home-backup.sh -d [tank, personal] -u [dominus, kamahell87]
+Syntax: home-backup.sh -d [foo, bar, ...] -u [userfoo, userbar, ...]
 
 EOF
   exit 1
